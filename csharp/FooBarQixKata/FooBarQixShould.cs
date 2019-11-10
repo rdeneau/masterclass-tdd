@@ -25,13 +25,22 @@ namespace FooBarQixKata
             Check(n, "Bar");
 
         [Theory]
+        [InlineData(14)]
+        [InlineData(28)]
+        public void Qixify_Multiple_Of_7(int n) =>
+            Check(n, "Qix");
+
+        [Theory]
         [InlineData(13)]
         public void Fooify_Number_With_Digit_3(int n) =>
             Check(n, "Foo");
 
         [Theory]
         [InlineData(3, "FooFoo", "Multiple of 3, Have Digit 3 one time")]
-        [InlineData(15, "FooBarBar", "Multiple of 3 and 5, Have Digit 5 one time")]
+        [InlineData(15, "FooBarBar", "Multiple of 3 and 5, Have Digit 5 once")]
+        [InlineData(33, "FooFooFoo", "Multiple of 3, Have Digit 6 two times")]
+        [InlineData(21, "FooQix", "Multiple of 3 and 7")]
+        [InlineData(37, "FooQix", "Multiple of 3, Have Digit 6 two times")]
         public void Concatenate_Matching_Cases(int n, string expected, string description) =>
             Check(n, expected);
 

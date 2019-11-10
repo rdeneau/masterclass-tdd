@@ -7,38 +7,40 @@ namespace FooBarQixKata
     public static class FooBarQix
     {
         public static string Of(int n) =>
-            Cases()
-                .Where(x => x.Match(n))
-                .Select(x => x.Value)
-                .DefaultIfEmpty($"{n}")
-                .JoinToString();
+            Cases.SelectMany(x => x.Matches(n))
+                 .DefaultIfEmpty($"{n}")
+                 .JoinToString();
 
-        private static IEnumerable<Case> Cases()
+        private static readonly IReadOnlyList<Case> Cases = new[]
         {
-            yield return Case.MultipleOf3;
-            yield return Case.MultipleOf5;
+            Case.WhenIsMultipleOf(3, "Foo"),
+            Case.WhenIsMultipleOf(5, "Bar"),
+            Case.WhenIsMultipleOf(7, "Qix"),
 
-            yield return Case.WithDigit3;
-            yield return Case.WithDigit5;
-        }
+            Case.WhenHasDigit('3', "Foo"),
+            Case.WhenHasDigit('5', "Bar"),
+            Case.WhenHasDigit('7', "Qix"),
+        };
     }
 
     public class Case
     {
-        public static readonly Case MultipleOf3 = new Case("Foo", n => n.IsMultipleOf(3));
-        public static readonly Case MultipleOf5 = new Case("Bar", n => n.IsMultipleOf(5));
+        public static Case WhenIsMultipleOf(int p, string then) => new Case(n =>
+            n.IsMultipleOf(p)
+                ? new[] { then }
+                : new string[0]);
 
-        public static readonly Case WithDigit3 = new Case("Foo", n => $"{n}".Contains("3"));
-        public static readonly Case WithDigit5 = new Case("Bar", n => $"{n}".Contains("5"));
+        public static Case WhenHasDigit(char digit, string then) => new Case(n =>
+             n.ToString("0")
+              .ToCharArray()
+              .Where(c => c == digit)
+              .Select(c => then));
 
-        public Func<int, bool> Match { get; }
+        public Func<int, IEnumerable<string>> Matches { get; }
 
-        public string Value { get; }
-
-        private Case(string value, Func<int, bool> match)
+        private Case(Func<int, IEnumerable<string>> matches)
         {
-            Match = match;
-            Value = value;
+            Matches = matches;
         }
     }
 }
