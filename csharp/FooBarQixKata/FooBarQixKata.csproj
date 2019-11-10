@@ -60,6 +60,7 @@
     <Compile Include="FooBarQix.cs" />
     <Compile Include="FooBarQixShould.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Extensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
