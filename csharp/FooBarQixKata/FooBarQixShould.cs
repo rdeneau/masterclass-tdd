@@ -1,5 +1,4 @@
 ﻿using FluentAssertions;
-using FluentAssertions.Primitives;
 using Xunit;
 
 namespace FooBarQixKata
@@ -14,9 +13,15 @@ namespace FooBarQixKata
             Check(n, expected);
 
         [Theory]
-        [InlineData(9, "Foo")]
-        public void Fooify_Multiple_Of_3(int n, string expected) =>
-            Check(n, expected);
+        [InlineData(9)]
+        [InlineData(18)]
+        public void Fooify_Multiple_Of_3(int n) =>
+            Check(n, "Foo");
+
+        [Theory]
+        [InlineData(13)]
+        public void Fooify_Number_With_Digit_3(int n) =>
+            Check(n, "Foo");
 
         private static void Check(int n, string expected) =>
             FooBarQix.Of(n)

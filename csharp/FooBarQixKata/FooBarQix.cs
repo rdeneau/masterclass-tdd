@@ -6,7 +6,12 @@ namespace FooBarQixKata
         {
             if (n % 3 == 0)
                 return "Foo";
-            return $"{n}";
+
+            var s = $"{n}";
+            if (s.Contains("3"))
+                return "Foo";
+
+            return s;
         }
     }
 }
