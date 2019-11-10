@@ -2,9 +2,9 @@ namespace FooBarQixKata
 {
     public static class FooBarQix
     {
-        public static string Of(int i)
+        public static string Of(int n)
         {
-            return "1";
+            return $"{n}";
         }
     }
 }

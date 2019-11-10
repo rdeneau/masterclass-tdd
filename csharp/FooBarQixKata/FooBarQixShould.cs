@@ -7,7 +7,9 @@ namespace FooBarQixKata
     {
         [Theory]
         [InlineData(1, "1")]
-        public void Be_Created(int n, string expected) =>
+        [InlineData(2, "2")]
+        [InlineData(4, "4")]
+        public void Stringify_Other_Numbers(int n, string expected) =>
             FooBarQix.Of(n)
                      .Should()
                      .Be(expected);
