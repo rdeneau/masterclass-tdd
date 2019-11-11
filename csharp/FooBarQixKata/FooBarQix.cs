@@ -5,9 +5,10 @@ namespace FooBarQixKata
 {
     public static class FooBarQix
     {
-        public static IEnumerable<Match> Test(int number) =>
+        public static IReadOnlyList<Match> Test(int number) =>
             Matches($"{number}".Length)
-                .Where(x => x.Test(number));
+                .Where(x => x.Test(number))
+                .ToList();
 
         private static IEnumerable<Match> Matches(int length)
         {
@@ -24,36 +25,16 @@ namespace FooBarQixKata
             }
         }
 
-        public static string Of(int n)
-        {
-            var multiples  = MultipleOfRules.Where(x => x.Match(n)).ToList();
-            var isMultiple = multiples.Count > 0;
-            var hasDigits  = $"{n}".Match("[357]");
+        public static string Of(int number) =>
+            Test(number)
+                .EmptyIfOnlyDigit0()
+                .Select(x => x.Word)
+                .DefaultIfEmpty($"{number}".Replace("0", "*"))
+                .JoinToString();
 
-            var rulesToApply = multiples.ToList();
-            if (hasDigits || isMultiple)
-            {
-                rulesToApply.Add(WithDigitsRule);
-            }
-
-            return rulesToApply
-                   .Select(x => x.Replace(n))
-                   .DefaultIfEmpty($"{n}".Replace("0", "*"))
-                   .JoinToString();
-        }
-
-        private static readonly IReadOnlyList<Rule> MultipleOfRules =
-            new[]
-            {
-                Rule.MultipleOf(3, "Foo"),
-                Rule.MultipleOf(5, "Bar"),
-                Rule.MultipleOf(7, "Qix"),
-            };
-
-        private static readonly Rule WithDigitsRule = Rule.WithDigits(
-            ('3', "Foo"),
-            ('5', "Bar"),
-            ('7', "Qix"),
-            ('0', "*"));
+        private static IEnumerable<Match> EmptyIfOnlyDigit0(this IReadOnlyList<Match> source) =>
+            source.All(x => x is DigitAtMatch y && y.Digit == 0)
+                ? Enumerable.Empty<Match>()
+                : source;
     }
 }
