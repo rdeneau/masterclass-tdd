@@ -6,14 +6,22 @@ namespace FooBarQixKata
     public static class FooBarQix
     {
         public static IEnumerable<Match> Test(int number) =>
-            Matches.Where(x => x.Test(number));
+            Matches($"{number}".Length)
+                .Where(x => x.Test(number));
 
-        private static IEnumerable<Match> Matches => new []
+        private static IEnumerable<Match> Matches(int length)
         {
-            new MultipleOfMatch(3, "Foo"),
-            new MultipleOfMatch(5, "Bar"),
-            new MultipleOfMatch(7, "Qix"),
-        };
+            yield return new MultipleOfMatch("Foo", 3);
+            yield return new MultipleOfMatch("Bar", 5);
+            yield return new MultipleOfMatch("Qix", 7);
+
+            for (var i = 0; i < length; i++)
+            {
+                yield return new DigitAtMatch("Foo", 3, i);
+                yield return new DigitAtMatch("Bar", 5, i);
+                yield return new DigitAtMatch("Qix", 7, i);
+            }
+        }
 
         public static string Of(int n)
         {

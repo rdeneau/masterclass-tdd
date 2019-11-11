@@ -57,6 +57,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DigitAtMatch.cs" />
     <Compile Include="Match.cs" />
     <Compile Include="MultipleOfMatch.cs" />
     <Compile Include="Rule.cs" />

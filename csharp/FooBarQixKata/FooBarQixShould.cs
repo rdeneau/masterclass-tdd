@@ -6,34 +6,37 @@ namespace FooBarQixKata
     public class FooBarQixShould
     {
         [Theory]
-        [InlineData(3)]
-        [InlineData(6)]
-        [InlineData(9)]
-        public void Detect_Multiple_Of_3(int n) =>
-            FooBarQix.Test(n)
+        [InlineData(3, 6)]
+        [InlineData(3, 3)]
+        [InlineData(3, 9)]
+        [InlineData(5, 05)]
+        [InlineData(5, 10)]
+        [InlineData(5, 15)]
+        [InlineData(7, 07)]
+        [InlineData(7, 14)]
+        [InlineData(7, 21)]
+        public void Detect_Multiple_Of(int prime, int number) =>
+            FooBarQix.Test(number)
                      .Should()
-                     .ContainSingle(x => IsMultipleOfMatch(x, 3));
+                     .ContainSingle(x => IsMultipleOfMatch(x, prime));
 
         [Theory]
-        [InlineData(5)]
-        [InlineData(10)]
-        [InlineData(15)]
-        public void Detect_Multiple_Of_5(int n) =>
-            FooBarQix.Test(n)
+        [InlineData(3, 0, 03)]
+        [InlineData(3, 1, 13)]
+        [InlineData(3, 0, 30)]
+        public void Detect_Digit_At(int digit, int index, int number) =>
+            FooBarQix.Test(number)
                      .Should()
-                     .ContainSingle(x => IsMultipleOfMatch(x, 5));
-
-        [Theory]
-        [InlineData(7)]
-        [InlineData(14)]
-        [InlineData(21)]
-        public void Detect_Multiple_Of_7(int n) =>
-            FooBarQix.Test(n)
-                     .Should()
-                     .ContainSingle(x => IsMultipleOfMatch(x, 7));
+                     .ContainSingle(x => IsDigitAtMatch(x, digit, index));
 
         private static bool IsMultipleOfMatch(Match source, int prime) =>
-            source is MultipleOfMatch multipleOf && multipleOf.Prime == prime;
+            source is MultipleOfMatch multipleOf &&
+            multipleOf.Prime == prime;
+
+        private static bool IsDigitAtMatch(Match source, int digit, int index) =>
+            source is DigitAtMatch digitAt &&
+            digitAt.Digit == digit &&
+            digitAt.Index == index;
 
         [Theory]
         [InlineData(1, "1")]

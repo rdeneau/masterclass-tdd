@@ -4,12 +4,9 @@ namespace FooBarQixKata
     {
         public int Prime { get; }
 
-        public string Word { get; }
-
-        public MultipleOfMatch(int prime, string word)
+        public MultipleOfMatch(string word, int prime) : base(word)
         {
             Prime = prime;
-            Word  = word;
         }
 
         public override bool Test(int number) =>
