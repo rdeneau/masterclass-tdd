@@ -5,6 +5,16 @@ namespace FooBarQixKata
 {
     public static class FooBarQix
     {
+        public static IEnumerable<Match> Test(int number) =>
+            Matches.Where(x => x.Test(number));
+
+        private static IEnumerable<Match> Matches => new []
+        {
+            new MultipleOfMatch(3, "Foo"),
+            new MultipleOfMatch(5, "Bar"),
+            new MultipleOfMatch(7, "Qix"),
+        };
+
         public static string Of(int n)
         {
             var multiples  = MultipleOfRules.Where(x => x.Match(n)).ToList();

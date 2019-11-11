@@ -6,6 +6,36 @@ namespace FooBarQixKata
     public class FooBarQixShould
     {
         [Theory]
+        [InlineData(3)]
+        [InlineData(6)]
+        [InlineData(9)]
+        public void Detect_Multiple_Of_3(int n) =>
+            FooBarQix.Test(n)
+                     .Should()
+                     .ContainSingle(x => IsMultipleOfMatch(x, 3));
+
+        [Theory]
+        [InlineData(5)]
+        [InlineData(10)]
+        [InlineData(15)]
+        public void Detect_Multiple_Of_5(int n) =>
+            FooBarQix.Test(n)
+                     .Should()
+                     .ContainSingle(x => IsMultipleOfMatch(x, 5));
+
+        [Theory]
+        [InlineData(7)]
+        [InlineData(14)]
+        [InlineData(21)]
+        public void Detect_Multiple_Of_7(int n) =>
+            FooBarQix.Test(n)
+                     .Should()
+                     .ContainSingle(x => IsMultipleOfMatch(x, 7));
+
+        private static bool IsMultipleOfMatch(Match source, int prime) =>
+            source is MultipleOfMatch multipleOf && multipleOf.Prime == prime;
+
+        [Theory]
         [InlineData(1, "1")]
         [InlineData(2, "2")]
         [InlineData(4, "4")]

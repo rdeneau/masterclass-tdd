@@ -9,6 +9,8 @@ namespace FooBarQixKata
             new Regex(pattern).IsMatch(s);
 
         public static bool IsMultipleOf(this int n, int p) =>
+            n >= p &&
+            p > 0 &&
             n % p == 0;
 
         public static string JoinToString(this IEnumerable<string> @this) =>
