@@ -6,6 +6,15 @@ namespace FooBarQixKata
     public class FooBarQixShould
     {
         [Theory]
+        [InlineData(1)]
+        [InlineData(2)]
+        [InlineData(4)]
+        public void Detect_None(int number) =>
+            FooBarQix.Test(number)
+                     .Should()
+                     .BeEmpty();
+
+        [Theory]
         [InlineData(3, 6)]
         [InlineData(3, 3)]
         [InlineData(3, 9)]
@@ -24,6 +33,15 @@ namespace FooBarQixKata
         [InlineData(3, 0, 03)]
         [InlineData(3, 1, 13)]
         [InlineData(3, 0, 30)]
+        [InlineData(5, 0, 05)]
+        [InlineData(5, 1, 15)]
+        [InlineData(5, 0, 50)]
+        [InlineData(7, 0, 07)]
+        [InlineData(7, 1, 17)]
+        [InlineData(7, 0, 70)]
+        [InlineData(0, 1, 10)]
+        [InlineData(0, 1, 100)]
+        [InlineData(0, 2, 100)]
         public void Detect_Digit_At(int digit, int index, int number) =>
             FooBarQix.Test(number)
                      .Should()

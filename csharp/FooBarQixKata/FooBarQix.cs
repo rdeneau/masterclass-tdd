@@ -20,6 +20,7 @@ namespace FooBarQixKata
                 yield return new DigitAtMatch("Foo", 3, i);
                 yield return new DigitAtMatch("Bar", 5, i);
                 yield return new DigitAtMatch("Qix", 7, i);
+                yield return new DigitAtMatch("*", 0, i);
             }
         }
 
